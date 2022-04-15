@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations
+
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 import "./transaction.dart";
@@ -13,8 +15,8 @@ class TransactionWidget extends StatelessWidget {
       children: <Widget>[
         Container(
           margin: EdgeInsets.symmetric(
-            vertical: 15,
-            horizontal: 15,
+            vertical: 12,
+            horizontal: 12,
           ),
           child: Text('\$ ${transaction.transactionAmount}',
               style: TextStyle(
