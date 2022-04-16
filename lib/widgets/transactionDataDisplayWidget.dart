@@ -1,16 +1,14 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations
-
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
-import "./transaction.dart";
+import "../models/transaction.dart";
 
-class TransactionWidget extends StatelessWidget {
+class TransactionDataDisplayWidget extends StatelessWidget {
   final Transaction transaction;
-  
-  TransactionWidget(this.transaction);
+  TransactionDataDisplayWidget(this.transaction);
   @override
   Widget build(BuildContext context) {
-    final String formattedDate = DateFormat('dd MMM yyyy').format(transaction.transactionDate);
+    final String formattedDate =
+        DateFormat('dd MMM yyyy').format(transaction.transactionDate);
     return Row(
       children: <Widget>[
         Container(
@@ -38,9 +36,7 @@ class TransactionWidget extends StatelessWidget {
                   fontStyle: FontStyle.italic,
                   fontSize: 18,
                 )),
-            Text(
-              '${formattedDate}',
-              style: TextStyle(color: Colors.grey))
+            Text('${formattedDate}', style: TextStyle(color: Colors.grey))
           ],
         )
       ],
