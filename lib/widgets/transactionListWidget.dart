@@ -5,17 +5,22 @@ import "package:flutter/material.dart";
 import '../models/transaction.dart';
 import './transactionDataDisplayWidget.dart';
 
-class TransactionWidget extends StatelessWidget {
+class TransactionListWidget extends StatelessWidget {
   final List<Transaction> userTransactions;
-  TransactionWidget(this.userTransactions);
+  TransactionListWidget(this.userTransactions);
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: userTransactions.map((transaction) {
-        return Card(
-          child:TransactionDataDisplayWidget(transaction)
-          );
-      }).toList(),
+    return Container(
+      height:300,
+      child: ListView.builder(
+        itemBuilder: (tx,index){
+           return Card(
+            child:TransactionDataDisplayWidget(userTransactions[index])
+            );
+          },
+        itemCount: userTransactions.length,
+
+      )
     );
   }
 }
