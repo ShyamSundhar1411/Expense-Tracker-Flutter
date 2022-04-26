@@ -11,22 +11,28 @@ class TransactionListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height:300,
-      child: userTransactions.isEmpty ? Column(children: [
-          Text("No Transactions Added Yet!",
-            style : Theme.of(context).textTheme.headline6
-          ),
-          SizedBox(height:30),
-          Container(height:200,child: Image.asset('assets/images/waiting.png',fit: BoxFit.cover))
-      ],) :ListView.builder(
-        itemBuilder: (tx,index){
-           return Card(
-            child:TransactionDataDisplayWidget(userTransactions[index])
-            );
-          },
-        itemCount: userTransactions.length,
-
-      )
-    );
+        height: 300,
+        child: userTransactions.isEmpty
+            ? Column(
+                children: [
+                  Text("No Transactions Added Yet!",
+                      style: Theme.of(context).textTheme.headline6),
+                  SizedBox(height: 30),
+                  Container(
+                      height: 200,
+                      child: Image.asset('assets/images/waiting.png',
+                          fit: BoxFit.cover))
+                ],
+              )
+            : ListView.builder(
+                itemBuilder: (tx, index) {
+                  return Card(
+                      elevation: 6,
+                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                      child: TransactionDataDisplayWidget(
+                          userTransactions[index]));
+                },
+                itemCount: userTransactions.length,
+              ));
   }
 }
