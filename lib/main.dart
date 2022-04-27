@@ -21,12 +21,11 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.pinkAccent,
             fontFamily: 'Quicksand',
             textTheme: ThemeData.light().textTheme.copyWith(
-                  headline6: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
-                      button: TextStyle(color:Colors.white)
-                ),
+                headline6: TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+                button: TextStyle(color: Colors.white)),
             appBarTheme: AppBarTheme(
                 textTheme: ThemeData.light().textTheme.copyWith(
                     headline6:
@@ -52,14 +51,26 @@ class _MyHomePageState extends State<MyHomePage> {
     ).toList();
   }
 
-  void _addNewTransaction(String title, double amount) {
+  void _addNewTransaction(String title, double amount, DateTime chosenDate) {
     final newTx = Transaction(
         transactionTitle: title,
         transactionAmount: amount,
-        transactionDate: DateTime.now(),
+        transactionDate: chosenDate,
         transactionId: DateTime.now().toString());
     setState(() {
       _transactions.add(newTx);
+    });
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((element) {
+        if (element.transactionId == id) {
+          return true;
+        } else {
+          return false;
+        }
+      });
     });
   }
 
@@ -90,8 +101,9 @@ class _MyHomePageState extends State<MyHomePage> {
           // ignore: prefer_const_literals_to_create_immutables
           children: <Widget>[
             Container(
-                width: double.infinity, child: ChartWidget(_recentTransactions)),
-            TransactionListWidget(_transactions),
+                width: double.infinity,
+                child: ChartWidget(_recentTransactions)),
+            TransactionListWidget(_transactions, _deleteTransaction),
           ],
         ),
       ),

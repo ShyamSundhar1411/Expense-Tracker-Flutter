@@ -7,11 +7,12 @@ import './transactionDataDisplayWidget.dart';
 
 class TransactionListWidget extends StatelessWidget {
   final List<Transaction> userTransactions;
-  TransactionListWidget(this.userTransactions);
+  final Function deleteTx;
+  TransactionListWidget(this.userTransactions,this.deleteTx);
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 300,
+        height: 450,
         child: userTransactions.isEmpty
             ? Column(
                 children: [
@@ -29,8 +30,7 @@ class TransactionListWidget extends StatelessWidget {
                   return Card(
                       elevation: 6,
                       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-                      child: TransactionDataDisplayWidget(
-                          userTransactions[index]));
+                      child: TransactionDataDisplayWidget(userTransactions[index],deleteTx));
                 },
                 itemCount: userTransactions.length,
               ));
