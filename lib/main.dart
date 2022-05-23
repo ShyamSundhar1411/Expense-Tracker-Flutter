@@ -1,10 +1,9 @@
-import 'package:expense_tracker/widgets/chart.dart';
-import 'package:expense_tracker/widgets/newTransaction.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import './models/transaction.dart';
 import './widgets/newTransaction.dart';
 import './widgets/transactionListWidget.dart';
+import './widgets/chart.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,8 +16,8 @@ class MyApp extends StatelessWidget {
         title: 'Expense Tracker',
         home: MyHomePage(),
         theme: ThemeData(
-            primarySwatch: Colors.purple,
-            accentColor: Colors.pinkAccent,
+            primarySwatch: Colors.orange,
+            accentColor: Colors.orangeAccent,
             fontFamily: 'Quicksand',
             textTheme: ThemeData.light().textTheme.copyWith(
                 headline6: TextStyle(
@@ -42,6 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final titleController = TextEditingController();
   final amountController = TextEditingController();
   final List<Transaction> _transactions = [];
+  bool showChart = false;
   List<Transaction> get _recentTransactions {
     return _transactions.where(
       (tx) {
@@ -88,22 +88,56 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final appbar = AppBar(title: Text('Expense Manegar'), actions: <Widget>[
+      IconButton(
+          onPressed: () => _startModelForNewTransaction(context),
+          icon: Icon(Icons.add))
+    ]);
+    final txListWidget = Container(
+                      height: (MediaQuery.of(context).size.height -
+                              appbar.preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.7,
+                      child: TransactionListWidget(
+                          _transactions, _deleteTransaction)
+    );
     return Scaffold(
-      appBar: AppBar(title: Text('Expense Tracker'), actions: <Widget>[
-        IconButton(
-            onPressed: () => _startModelForNewTransaction(context),
-            icon: Icon(Icons.add))
-      ]),
+      appBar: appbar,
       body: SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           // ignore: prefer_const_literals_to_create_immutables
           children: <Widget>[
+            if (isLandscape)(Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+              Text('Show Chart'),
+              Switch(
+                  value: showChart,
+                  onChanged: (val) {
+                    setState(() {
+                      showChart = val;
+                    });
+                  }),
+            ])),
+            if(!isLandscape)(Container(
+                      height: (MediaQuery.of(context).size.height -
+                              appbar.preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.3,
+                      child: ChartWidget(_recentTransactions))),
+            if(!isLandscape) txListWidget,
             Container(
-                width: double.infinity,
-                child: ChartWidget(_recentTransactions)),
-            TransactionListWidget(_transactions, _deleteTransaction),
+              width: double.infinity,
+              child: showChart
+                  ? Container(
+                      height: (MediaQuery.of(context).size.height -
+                              appbar.preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.6,
+                      child: ChartWidget(_recentTransactions))
+                  : txListWidget
+            )
           ],
         ),
       ),

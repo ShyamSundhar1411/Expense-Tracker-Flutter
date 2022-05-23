@@ -16,7 +16,7 @@ class TransactionDataDisplayWidget extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(10),
             child: FittedBox(
-              child: Text("\$${transaction.transactionAmount}"),
+              child: Text("\₹${transaction.transactionAmount}"),
             ),
           )),
       title: Text(
