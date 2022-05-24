@@ -24,7 +24,8 @@ class TransactionDataDisplayWidget extends StatelessWidget {
         style: Theme.of(context).textTheme.headline6,
       ),
       subtitle: Text("${formattedDate}"),
-      trailing: IconButton(
+
+      trailing: MediaQuery.of(context).size.width > 400 ? FlatButton.icon(textColor:Theme.of(context).errorColor,label: Text('Delete'),icon: Icon(Icons.delete),onPressed:()=>deleteFunction(transaction.transactionId)):IconButton(
         icon: Icon(Icons.delete),
         color: Theme.of(context).errorColor,
         onPressed: ()=>deleteFunction(transaction.transactionId),
