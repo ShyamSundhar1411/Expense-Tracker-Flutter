@@ -1,3 +1,4 @@
+import 'package:expense_tracker/widgets/adaptiveButton.dart';
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 
@@ -75,11 +76,7 @@ class _NewTransactionState extends State<NewTransaction> {
                     Expanded(
 
                       child: Text(_selectedDate == null ? "No Date Chosen!":"Chosen Date:${DateFormat.yMd().format(_selectedDate)}")),
-                    FlatButton(
-                        textColor: Theme.of(context).primaryColor,
-                        onPressed: presentDataPicker,
-                        child: Text("Choose Date",
-                            style: TextStyle(fontWeight: FontWeight.bold)))
+                    AdaptiveButton("Choose Date",presentDataPicker)
                   ]),
                 ),
                 RaisedButton(

@@ -94,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
         MediaQuery.of(context).orientation == Orientation.landscape;
     
     final PreferredSizeWidget appbar = Platform.isIOS ? CupertinoNavigationBar(
-      middle:Text('Expense Manegar'),
+      middle:Text('Expense Maneger'),
       trailing:Row(
         mainAxisSize: MainAxisSize.min,
         children:<Widget>[
@@ -102,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(CupertinoIcons.add)
         )
       ]), 
-    ): AppBar(title: Text('Expense Manegar'), actions: <Widget>[
+    ): AppBar(title: Text('Expense Maneger'), actions: <Widget>[
       IconButton(
           onPressed: () => _startModelForNewTransaction(context),
           icon: Icon(Icons.add))
@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 MediaQuery.of(context).padding.top) *
             0.7,
         child: TransactionListWidget(_transactions, _deleteTransaction));
-    final pageBody = SingleChildScrollView(
+    final pageBody = SafeArea(child:SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -123,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
               (Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Show Chart'),
+                    Text('Show Chart',style: Theme.of(context).textTheme.titleMedium),
                     Switch.adaptive(
                         value: showChart,
                         onChanged: (val) {
@@ -152,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     : txListWidget)
           ],
         ),
-      );
+      ));
     return Platform.isIOS?CupertinoPageScaffold(
       child: pageBody,
     ): Scaffold(
