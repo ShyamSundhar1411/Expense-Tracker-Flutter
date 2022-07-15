@@ -24,15 +24,9 @@ class TransactionListWidget extends StatelessWidget {
               ],
             );
           })
-        : ListView.builder(
-            itemBuilder: (tx, index) {
-              return Card(
-                  elevation: 6,
-                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-                  child: TransactionDataDisplayWidget(
-                      userTransactions[index], deleteTx));
-            },
-            itemCount: userTransactions.length,
-          );
+        : ListView(children: 
+          userTransactions.map((tx)=>TransactionDataDisplayWidget(
+            tx,
+            deleteTx)).toList());
   }
 }
